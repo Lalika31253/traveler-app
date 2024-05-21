@@ -5,7 +5,7 @@ import FavoriteLocations from '@/components/FavoriteLocations';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSession } from 'next-auth/react';
-import { Box, Button, Stack, Typography } from '@mui/material';
+import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 
 const FavoritesPage = () => {
   const { data: session } = useSession();
@@ -46,14 +46,18 @@ const FavoritesPage = () => {
       </Box>
       <Box display='flex' flexGrow='1' flexDirection='column' alignItems={'center'} margin={2}>
         <Box display='flex' direction='row' width='100%' justifyContent={"space-between"}>
-        <Typography variant='h5'>
+          <Typography variant='h5'>
              MY FAVOIRTE LOCATIONS
           </Typography>         
         </Box>
-        <FavoriteLocations locations={favoriteLocations} onFavoriteToggle={handleFavoriteToggle}/>
+        <Grid container columnSpacing={1} rowSpacing={5}>
+          {favoriteLocations.map(location => (
+            <FavoriteLocations key={location.id} location={location} onFavoriteToggle={handleFavoriteToggle}/>
+          ))}
+        </Grid>
       </Box>
     </Box>
   );
-};
+};  
 
 export default FavoritesPage;
